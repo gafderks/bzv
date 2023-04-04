@@ -24,6 +24,15 @@ const rotation = computed<string>(() => {
     return `${step * props.itemIndex}turn`;
 });
 
+const flipX = computed<number>(() => {
+    return props.itemIndex % 2 === 0 ? -1 : 1;
+});
+
+const flipY = computed<number>(() => {
+    const mod4 = props.itemIndex % 4;
+    return mod4 === 2 || mod4 === 3 ? -1 : 1;
+});
+
 
 const pageUrl = new URL(window.location.href);
 pageUrl.hash = '';
@@ -41,7 +50,7 @@ const qrcode = useQRCode(`${pageUrl}#found=${props.value.key}`);
                 <img :src="value.imageUrl" />
             </div>
             <div class="img-container" v-else>
-                <img :src="paasei" :style="{'--rotation': rotation}" />
+                <img :src="paasei" :style="{'--rotation': rotation, '--flipx': flipX, '--flipy': flipY}" />
             </div>
             <div class="card-body d-print-none">
                 <h5 class="card-title">{{ value.name }}</h5>
@@ -71,7 +80,10 @@ const qrcode = useQRCode(`${pageUrl}#found=${props.value.key}`);
         height: 200px;
         text-align: center;
         margin: 0 auto;
+        filter: drop-shadow(12px 12px 5px rgba(0, 0, 0, 0.5));
         --rotation: 0turn;
+        --flipx: 1;
+        --flipy: 1;
         
         &.outline img {
             outline: 4px solid gold;
@@ -82,7 +94,8 @@ const qrcode = useQRCode(`${pageUrl}#found=${props.value.key}`);
         img {
             // filter: brightness(0.05) var(--shadow);
             // box-shadow: 12px 12px 5px 0 rgba(0, 0,0,0.5); 
-            filter: drop-shadow(12px 12px 5px rgba(0, 0, 0, 0.5)) hue-rotate(var(--rotation));
+            filter: hue-rotate(var(--rotation));
+            transform: scaleX(var(--flipx)) scaleY(var(--flipy));
             user-select: none;
             pointer-events: none;
             max-width: 90%;
