@@ -1,7 +1,7 @@
 import { ref, computed, watchEffect, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { useUrlSearchParams, useLocalStorage } from '@vueuse/core';
-import pokemon from './pokemon.json';
+import people from './people.json';
 
 export interface CollectableItem {
   key: string;
@@ -12,7 +12,7 @@ export interface CollectableItem {
 
 export const useCollectableStore = defineStore('collectable', () => {
 
-  const inventory: Omit<CollectableItem, "found">[] = pokemon.map(item => {
+  const inventory: Omit<CollectableItem, "found">[] = people.map(item => {
     return {
       ...item,
       key: item.key.toUpperCase()

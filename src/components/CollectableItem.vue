@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import type { CollectableItem } from '@/stores/collectable';
+import { useCollectableStore, type CollectableItem } from '@/stores/collectable';
 import { computed } from 'vue';
 import { useQRCode } from '@vueuse/integrations/useQRCode';
+
+const collectableStore = useCollectableStore();
 
 
 interface Props {
     value: CollectableItem;
+    itemIndex: number;
     showQrKey?: boolean;
 }
 
@@ -15,9 +18,12 @@ const props = withDefaults(defineProps<Props>(),
     }
 );
 
-const fullUrl = computed(() => {
-    return import.meta.env.BASE_URL + 'img/' + props.value.imageUrl
-})
+const paasei = import.meta.env.BASE_URL + 'img/paasei.png';
+const rotation = computed<string>(() => {
+    const step = 1 / collectableStore.items.length;
+    return `${step * props.itemIndex}turn`;
+});
+
 
 const pageUrl = new URL(window.location.href);
 pageUrl.hash = '';
@@ -31,8 +37,11 @@ const qrcode = useQRCode(`${pageUrl}#found=${props.value.key}`);
                 <div>Code: <code>{{ value.key }}</code></div>
                 <img :src="qrcode" alt="QR code" />
             </div>
-            <div class="img-container">
-                <img :src="fullUrl" />
+            <div class="img-container outline" v-if="value.found || showQrKey">
+                <img :src="value.imageUrl" />
+            </div>
+            <div class="img-container" v-else>
+                <img :src="paasei" :style="{'--rotation': rotation}" />
             </div>
             <div class="card-body d-print-none">
                 <h5 class="card-title">{{ value.name }}</h5>
@@ -56,15 +65,24 @@ const qrcode = useQRCode(`${pageUrl}#found=${props.value.key}`);
     }
 
     .img-container {
-        background-color: rgba(0, 0, 0, .2);
-        border-radius: 50%;
+        // background-color: rgba(0, 0, 0, .2);
+        // border-radius: 50%;
         width: 200px;
         height: 200px;
         text-align: center;
         margin: 0 auto;
+        --rotation: 0turn;
+        
+        &.outline img {
+            outline: 4px solid gold;
+            border-radius: 50%;
+        }
+
 
         img {
-            filter: brightness(0.05) var(--shadow);
+            // filter: brightness(0.05) var(--shadow);
+            // box-shadow: 12px 12px 5px 0 rgba(0, 0,0,0.5); 
+            filter: drop-shadow(12px 12px 5px rgba(0, 0, 0, 0.5)) hue-rotate(var(--rotation));
             user-select: none;
             pointer-events: none;
             max-width: 90%;
@@ -91,10 +109,7 @@ const qrcode = useQRCode(`${pageUrl}#found=${props.value.key}`);
 
     &.found,
     &.key {
-        .img-container img {
-            filter: var(--shadow);
-        }
-
+        
         .card-title {
             text-shadow: none;
             color: var(--bs-body-color);
@@ -106,6 +121,7 @@ const qrcode = useQRCode(`${pageUrl}#found=${props.value.key}`);
     .card {
         box-shadow: none;
         border: 1px solid black;
+        padding-bottom: 50px;
         page-break-inside: avoid;
     }
 }

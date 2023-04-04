@@ -13,7 +13,7 @@ const showKey = computed(() => params.key === 'leiding');
 <template>
   <div class="container">
     <header class="d-print-none">
-      <h1 class="display-1">DEX</h1>
+      <h1 class="display-1">Zet Paashaas</h1>
       <p class="lead">
         {{ store.foundItems.size }} van {{ store.items.length }} gevonden!
         <a href="#" class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
@@ -24,7 +24,7 @@ const showKey = computed(() => params.key === 'leiding');
       <FormAddManual />
     </header>
     <div class="d-flex flex-row justify-content-center align-items-center flex-wrap">
-      <CollectableItem class="flex-grow-0" :show-qr-key="showKey" v-for="(item, i) in store.items" :value="item"
+      <CollectableItem class="flex-grow-0" :show-qr-key="showKey" v-for="(item, i) in store.items" :value="item" :itemIndex="i"
         :key="i" />
     </div>
   </div>
@@ -32,6 +32,6 @@ const showKey = computed(() => params.key === 'leiding');
 
 <style>
 body {
-  background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);
+  background-image: linear-gradient(to bottom, #fbbe3c 0%, #ff34c9 100%);
 }
 </style>
