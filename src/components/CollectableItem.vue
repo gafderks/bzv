@@ -76,8 +76,8 @@ const qrcode = useQRCode(`${pageUrl}#found=${props.value.key}`);
     .img-container {
         // background-color: rgba(0, 0, 0, .2);
         // border-radius: 50%;
-        width: 200px;
-        height: 200px;
+        width: 120px;
+        height: 155px;
         text-align: center;
         margin: 0 auto;
         filter: drop-shadow(12px 12px 5px rgba(0, 0, 0, 0.5));
@@ -108,9 +108,10 @@ const qrcode = useQRCode(`${pageUrl}#found=${props.value.key}`);
         margin-top: 20px;
 
         h5 {
-            margin: 15px;
+            margin: 15px 0;
             display: inline;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            white-space:nowrap;
         }
     }
 
