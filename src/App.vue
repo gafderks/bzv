@@ -33,6 +33,6 @@ const showKey = computed(() => params.key === 'leiding');
 <style>
 body {
   background-image: linear-gradient(to bottom, #fbbe3c 0%, #ff34c9 100%);
-  height: 100vh;
+  height: 100%;
 }
 </style>
