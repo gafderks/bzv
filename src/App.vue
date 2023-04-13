@@ -24,8 +24,8 @@ const showKey = computed(() => params.key === 'leiding');
       <FormAddManual />
     </header>
     <div class="d-flex flex-row justify-content-center align-items-center flex-wrap">
-      <CollectableItem class="flex-grow-0" :show-qr-key="showKey" v-for="(item, i) in store.items" :value="item" :itemIndex="i"
-        :key="i" />
+      <CollectableItem class="flex-grow-0" :show-qr-key="showKey" v-for="(item, i) in store.items" :value="item"
+        :itemIndex="i" :key="i" />
     </div>
   </div>
 </template>
@@ -33,5 +33,6 @@ const showKey = computed(() => params.key === 'leiding');
 <style>
 body {
   background-image: linear-gradient(to bottom, #fbbe3c 0%, #ff34c9 100%);
+  height: 100vh;
 }
 </style>
