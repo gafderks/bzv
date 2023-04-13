@@ -13,7 +13,7 @@ const showKey = computed(() => params.key === 'leiding');
 <template>
   <div class="container">
     <header class="d-print-none">
-      <h1 class="display-1">Zet Paashaas</h1>
+      <h1 class="display-1">BZV</h1>
       <p class="lead">
         {{ store.foundItems.size }} van {{ store.items.length }} gevonden!
         <a href="#" class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
